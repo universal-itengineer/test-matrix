@@ -1,0 +1,66 @@
+name: Parallel Jobs with Matrix
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test-matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - scenario: "ceph"
+            storage_class: "rbd-ceph-sc-r2"
+            description: "Ceph RBD Storage Class"
+          - scenario: "replicated"
+            storage_class: "linstor-r2"
+            description: "Linstor Replicated Storage"
+    steps:
+      - name: Display configuration
+        run: |
+          echo "Scenario: ${{ matrix.scenario }}"
+          echo "Storage Class: ${{ matrix.storage_class }}"
+          echo "Description: ${{ matrix.description }}"
+      
+      - name: Run scenario-specific tests
+        run: |
+          case "${{ matrix.scenario }}" in
+            "ceph")
+              echo "Running Ceph tests with ${{ matrix.storage_class }}"
+              # Add ceph-specific test commands
+              ;;
+            "replicated")
+              echo "Running Replicated tests with ${{ matrix.storage_class }}"
+              # Add replicated-specific test commands
+              ;;
+          esac
+
+  test-matrix1:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: ceph
+            value: rbd-ceph-sc-r2
+          - name: replicated
+            value: linstor-r2
+    steps:
+      - name: Echo matrix values
+        run: |
+          echo "Job name: ${{ matrix.name }}"
+          echo "Value: ${{ matrix.value }}"
+          echo "Running test for ${{ matrix.name }} with storage class ${{ matrix.value }}"
+      
+      - name: Your actual test steps here
+        run: |
+          # Add your specific test logic here
+          echo "Performing tests for ${{ matrix.name }}"
+          # Example: run specific tests based on the matrix values
+          if [ "${{ matrix.name }}" = "ceph" ]; then
+            echo "Running Ceph-specific tests"
+          elif [ "${{ matrix.name }}" = "replicated" ]; then
+            echo "Running Replicated-specific tests"
+          fi
