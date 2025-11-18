@@ -64,3 +64,5 @@ jobs:
           elif [ "${{ matrix.name }}" = "replicated" ]; then
             echo "Running Replicated-specific tests"
           fi
+
+          echo "Done"
