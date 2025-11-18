@@ -65,4 +65,4 @@ jobs:
             echo "Running Replicated-specific tests"
           fi
 
-          echo "Done"
+          echo "Done 1"
