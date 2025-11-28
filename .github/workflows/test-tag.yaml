@@ -1,0 +1,37 @@
+name: Test Tag
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag of the module, example v1.21.1"
+        type: string
+        required: true
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  job-CE:
+    name: Edition CE
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.tag }}
+
+      - name: ls
+        run: |
+          ls -la
+          pwd
+      
+      - name: Git
+        run: |
+          git status
+          git tag
