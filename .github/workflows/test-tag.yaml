@@ -30,6 +30,7 @@ jobs:
         run: |
           ls -la
           pwd
+          cat test.txt
       
       - name: Git
         run: |
