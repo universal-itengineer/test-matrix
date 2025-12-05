@@ -19,7 +19,7 @@ jobs:
   # Run pipeline for Ceph storage
   e2e-ceph:
     name: E2E Pipeline (Ceph)
-    uses: ./.github/workflows/wf1.yaml
+    uses: ./.github/workflows/reuse/wf1.yaml
     with:
       storage_type: ceph
       nested_storageclass_name: nested-ceph-pool-r2-csi-rbd
@@ -27,7 +27,7 @@ jobs:
     
   e2e-replicated:
     name: E2E Pipeline (Replicated)
-    uses: ./.github/workflows/wf1.yaml
+    uses: ./.github/workflows/reuse/wf1.yaml
     with:
       storage_type: replicated
       nested_storageclass_name: nested-thin-r1
