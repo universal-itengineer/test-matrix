@@ -1,0 +1,34 @@
+# 
+name: E2E Matrix Tests (Reusable Workflow Example)
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize, labeled, unlabeled]
+    branches:
+      - main
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.event.number || github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  # Run pipeline for Ceph storage
+  e2e-ceph:
+    name: E2E Pipeline (Ceph)
+    uses: ./.github/workflows/reuse/wf1.yaml
+    with:
+      storage_type: ceph
+      nested_storageclass_name: nested-ceph-pool-r2-csi-rbd
+      default_user: ubuntu
+    
+  e2e-replicated:
+    name: E2E Pipeline (Replicated)
+    uses: ./.github/workflows/reuse/wf1.yaml
+    with:
+      storage_type: replicated
+      nested_storageclass_name: nested-thin-r1
+      default_user: ubuntu

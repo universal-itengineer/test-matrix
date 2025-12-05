@@ -1,0 +1,54 @@
+name: E2E Cluster Pipeline (Reusable)
+
+on:
+  workflow_call:
+    inputs:
+      storage_type:
+        required: true
+        type: string
+        description: 'Storage type (ceph or replicated)'
+      nested_storageclass_name:
+        required: true
+        type: string
+        description: 'Nested storage class name'
+      default_user:
+        required: false
+        type: string
+        default: 'ubuntu'
+     
+
+env:
+  DEFAULT_USER: ${{ inputs.default_user }}
+  GO_VERSION: v1.26.4
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  bootstrap:
+    name: Bootstrap cluster (${{ inputs.storage_type }})
+    runs-on: ubuntu-latest
+    concurrency:
+      group: "${{ github.workflow }}-${{ github.event.number || github.ref }}-${{ inputs.storage_type }}"
+      cancel-in-progress: true
+    outputs:
+      storage-type: ${{ steps.vars.outputs.storage_type }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set outputs
+        id: vars
+        run: |
+          namespace="nightly-e2e-${{ inputs.storage_type }}-$(git rev-parse --short HEAD)"
+  
+  configure-storage:
+    name: Configure storage (${{ inputs.storage_type }})
+    runs-on: ubuntu-latest
+    needs: bootstrap
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure storage
+        run: |
+          echo "Configure storage ${{ inputs.storage_type }}"
