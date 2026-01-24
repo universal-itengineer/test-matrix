@@ -17,6 +17,6 @@ jobs:
         uses: actions/checkout@v4
       - name: test cat
         run: |
-          $(date)
+          echo "[INFO] $(date)"
           echo "[INFO] show content test.txt"
           cat test.txt
