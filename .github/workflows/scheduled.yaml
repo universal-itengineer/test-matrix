@@ -1,0 +1,12 @@
+name: Scheduled Reusable Runner
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch: {}
+
+jobs:
+  run-reusable:
+    uses: ./.github/workflows/reuse/scheduled-reusable.yaml
+    with:
+      message: "Scheduled run: hello from reusable workflow"
