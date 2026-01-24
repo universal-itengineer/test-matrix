@@ -3,13 +3,13 @@ name: E2E Matrix Tests (Reusable Workflow Example)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, reopened, synchronize, labeled, unlabeled]
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
+  # pull_request:
+  #   types: [opened, reopened, synchronize, labeled, unlabeled]
+  #   branches:
+  #     - main
 
 concurrency:
   group: "${{ github.workflow }}-${{ github.event.number || github.ref }}"
