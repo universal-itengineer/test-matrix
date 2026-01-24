@@ -1,0 +1,22 @@
+name: Test Scheduled workflow
+
+on:
+  schedule:
+    - cron: "*/20 * 24 * *"
+  workflow_dispatch: {}
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  print-file-content:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: test cat
+        run: |
+          $(date)
+          echo "[INFO] show content test.txt"
+          cat test.txt
