@@ -2,7 +2,7 @@ name: Scheduled Reusable Runner
 
 on:
   schedule:
-    - cron: "0 10 * * *"
+    - cron: "*/20 * * * *"
   workflow_dispatch: {}
 
 defaults:
