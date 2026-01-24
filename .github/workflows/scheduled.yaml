@@ -7,6 +7,6 @@ on:
 
 jobs:
   run-reusable:
-    uses: ./.github/workflows/scheduled-reusable.yaml
+    uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/scheduled-reusable.yaml@main
     with:
       message: "Scheduled run: hello from reusable workflow"
