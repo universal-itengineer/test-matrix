@@ -11,7 +11,7 @@ defaults:
 
 jobs:
   run-reusable:
-    uses: .github/workflows/scheduled-reusable.yaml
+    uses: ./.github/workflows/scheduled-reusable.yaml
     with:
       message: "Scheduled run: hello from reusable workflow"
   
