@@ -5,8 +5,21 @@ on:
     - cron: "0 10 * * *"
   workflow_dispatch: {}
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   run-reusable:
-    uses: ${{ github.repository_owner }}/${{ github.repository }}/.github/workflows/scheduled-reusable.yaml@main
+    uses: .github/workflows/scheduled-reusable.yaml
     with:
       message: "Scheduled run: hello from reusable workflow"
+  
+  print-file-content:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkuot
+      uses: actions/checkout@v4
+    - name: test cat
+      run: |
+        cat test.txt
