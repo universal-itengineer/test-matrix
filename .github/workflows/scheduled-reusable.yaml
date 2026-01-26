@@ -13,4 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print message
-        run: echo "${{ inputs.message }}" $(date)
+        run: |
+          echo "${{ inputs.message }}" $(date)
+          echo " === "
+          for i in ${{ inputs.message }}; do
+            echo "$i <--"
+          done
