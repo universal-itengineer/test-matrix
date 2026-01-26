@@ -3,7 +3,18 @@ name: Scheduled Reusable Runner
 on:
   schedule:
     - cron: "*/20 * * * *"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      storage:
+        description: "Storage"
+        required: false
+        type: choice
+        default: s3
+        options:
+          - s3
+          - gcs
+          - azure
+          - oss
 
 defaults:
   run:
@@ -23,3 +34,4 @@ jobs:
       - name: test cat
         run: |
           cat test.txt
+          echo "${{ github.event.inputs.storage }}"
