@@ -1,4 +1,4 @@
-name: Reusable Scheduled Job
+name: Reusable Scheduled Job (0)
 
 on:
   workflow_call:
@@ -12,10 +12,21 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Print message
         run: |
           echo "${{ inputs.message }}" $(date)
           echo " === "
           for i in ${{ inputs.message }}; do
             echo "$i <--"
+            echo "$i" >> artifact-file.txt
           done
+      - name: Upload generated files
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-files-${{ github.job }}-${{ github.run_id }}
+          path: artifact-file.txt
+          overwrite: true
+          include-hidden-files: true
+          retention-days: 1
+  

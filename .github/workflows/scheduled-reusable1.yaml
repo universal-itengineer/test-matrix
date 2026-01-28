@@ -1,0 +1,24 @@
+name: Reusable Scheduled Job (1)
+
+on:
+  workflow_call:
+
+
+jobs:
+  echo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download E2E report artifacts
+        uses: actions/download-artifact@v5
+        continue-on-error: true
+        id: download-artifacts-pattern
+        with:
+          pattern: "generated-files-*"
+          path: downloaded-artifacts/
+          merge-multiple: false
+      - name: Print downloaded-artifacts
+        run: |
+          echo "Downloaded artifacts:"
+          ls -la downloaded-artifacts
+          tree downloaded-artifacts
