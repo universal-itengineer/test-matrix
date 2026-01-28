@@ -28,6 +28,7 @@ jobs:
       message: "test run run-reusable"
   
   run-reusable1:
+    needs: run-reusable
     uses: ./.github/workflows/scheduled-reusable1.yaml
 
   

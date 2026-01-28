@@ -22,3 +22,5 @@ jobs:
           echo "Downloaded artifacts:"
           ls -la downloaded-artifacts
           tree downloaded-artifacts
+          echo " === "
+          cat downloaded-artifacts/artifact-file.txt
